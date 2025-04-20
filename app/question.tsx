@@ -7,7 +7,7 @@ type QuestionProps = {
   question: string;
   answers: string[];
   correctAnswer: string;
-  onAnswered: (isCorrect: boolean) => void;
+  onAnswered: (isCorrect: boolean, answer:string, correctAnswer: string) => void;
 };
 
 export default function Question({
@@ -22,7 +22,7 @@ export default function Question({
     if (selectedAnswer === null) {
       setSelectedAnswer(answer);
       const isCorrect = answer === correctAnswer;
-      onAnswered(isCorrect); // Notify parent with result
+      onAnswered(isCorrect, answer, correctAnswer); // Notify parent with result
     }
   };
 
