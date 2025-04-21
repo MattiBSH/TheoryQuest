@@ -1,5 +1,9 @@
 .questionBox {
     padding: 20px;
+    height: max-content;  
+    height: 100%;
+    padding: 2%;
+    margin: 2%;
   }
   
   .questionText {
@@ -22,7 +26,8 @@
   }
   
   .answer:hover {
-    background-color: #ddd;
+    opacity: calc(1 - 0.1);
+    box-shadow: black 0px 0px 2px;
   }
   
   .correct {

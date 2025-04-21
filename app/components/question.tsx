@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import styles from "./question.module.css";
+import styles from "../question.module.css";
 
 type QuestionProps = {
   question: string;
@@ -27,7 +27,8 @@ export default function Question({
   };
 
   return (
-    <div className={styles.questionBox}>
+    //Box shadow four corners
+    <div className={styles.questionBox} style={{boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)"}}>
       <h2 className={styles.questionText}>{question}</h2>
       <ul className={styles.answerList}>
         {answers.map((answer, index) => {

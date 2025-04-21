@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import styles from "./page.module.css";
-import ControlQuestion from "./controlQuestion";
+import ControlQuestion from "./components/controlQuestion";
 
 export default function Home() {
   const [controlGame, setControlGame] = useState(false);

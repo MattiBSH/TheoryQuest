@@ -1,8 +1,9 @@
-import { useState } from "react";
-import styles from "./page.module.css";
+import { useEffect, useState } from "react";
+import styles from "../page.module.css";
+import {QuestionType} from "../types/questionType";
+import PieChart from "../PieChart";
 import Question from "./question";
-import PieChart from "./PieChart";
-import { questions } from "./data/questions";
+
 
 export default function ControlQuestion() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -10,8 +11,10 @@ export default function ControlQuestion() {
   const [correctCount, setCorrectCount] = useState(0);
   const [incorrectCount, setIncorrectCount] = useState(0);
   const [count, setCount] = useState(0);
-  const [remainingQuestions, setRemainingQuestions] = useState(questions);
-
+  const [remainingQuestions, setRemainingQuestions] = useState<QuestionType[]>();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentQuestion, setCurrentQuestion] = useState<QuestionType>();
   interface ReviewData {
     question: string;
     answered: string;
@@ -20,70 +23,147 @@ export default function ControlQuestion() {
 
   const [dataForReview, setDataForReview] = useState<ReviewData[]>([]);
 
+  useEffect(() => {
+    console.log("Correct count updated:", correctCount);
+  }, [correctCount]);
+  
+  useEffect(() => {
+    console.log("Incorrect count updated:", incorrectCount);
+  }, [incorrectCount]);
+  
+  useEffect(() => {
+    console.log("Total count updated:", count);
+  }, [count]);
+
+  useEffect(() => {
+    console.log("Data for review updated:", dataForReview);
+  }, [dataForReview]);
+
+  useEffect(() => {
+    console.log("Remaining questions updated:", remainingQuestions);
+  }, [remainingQuestions]);
+
+  useEffect(() => {
+    console.log("Current question updated:", currentQuestion);
+  }, [currentQuestion]);
+
+  useEffect(() => {
+    console.log("Current index updated:", currentIndex);
+  }, [currentIndex]);
+
+  useEffect(() => {
+    // Fetch questions from our API endpoint
+    loadQuestions();
+
+    
+  }, []);
+  
+  function loadQuestions() {
+    fetch('/api/convert')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data: QuestionType[]) => {
+        if (data.length === 0) {
+          setError("No questions available.");
+          setLoading(false);
+          return;
+        }
+
+        // Shuffle answers inside each question, if needed
+        const shuffledData = data.map((item) => ({
+          ...item,
+          answers: item.answers.sort(() => Math.random() - 0.5) // Example shuffle
+        }));
+
+        setCurrentIndex(Math.floor(Math.random() * shuffledData.length)); // Randomize the starting question
+
+        setRemainingQuestions(shuffledData);
+        setCurrentQuestion(shuffledData[currentIndex]); // Safe: using local data
+        setLoading(false);
+      })
+      .catch(error => {
+        setError(error.message);
+        setLoading(false);
+      });
+  }
+
   const handleAnswered = (
     isCorrect: boolean,
     answered: string,
     correct: string
   ) => {
     setShowNext(true);
-    console.log("isCorrect", isCorrect);
-    console.log("currentIndex", currentIndex);
-    console.log("questions", questions);
-    console.log("questions.length", questions.length);
-    console.log("count", count);
+
+    if (remainingQuestions==null || remainingQuestions.length==0) return; // Prevent action if loading
 
     setDataForReview((dataForReview) => [
       ...dataForReview,
-      { question: questions[currentIndex].question, answered, correct },
+      { question: remainingQuestions[currentIndex].question, answered, correct },
     ]);
 
     if (isCorrect) {
       setCount((prev) => prev + 1);
-      setCorrectCount((prev) => prev + 1);
+      setCorrectCount(correctCount + 1);
     } else {
       setCount((prev) => prev + 1);
-      setIncorrectCount((prev) => prev + 1);
+      setIncorrectCount(incorrectCount + 1);
     }
+    console.log("Correct count:", correctCount);
+    console.log("Incorrect count:", incorrectCount);
+    console.log("Count:", count);
+    console.log("Answered:", answered);
+    console.log("Correct:", correct);
   };
+
   const handleNext = () => {
+    if (remainingQuestions==null || remainingQuestions.length==0) return; // Prevent action if loading
+
     const updatedQuestions = [...remainingQuestions];
     updatedQuestions.splice(currentIndex, 1);
 
-    if (updatedQuestions.length > 0) {
-      const nextIndex = Math.floor(Math.random() * updatedQuestions.length);
-      setCurrentIndex(nextIndex);
-    }
-
     setRemainingQuestions(updatedQuestions);
+    const nextIndex = Math.floor(Math.random() * updatedQuestions.length);
+
+    setCurrentIndex(nextIndex);
+    setCurrentQuestion(remainingQuestions[currentIndex]); // Safe: using local data
+
     setShowNext(false);
   };
 
-  const currentQuestion = remainingQuestions[currentIndex];
-
-  const isAnyIncorrect = dataForReview.some(
-    (item) => item.answered !== item.correct
-  );
+  const handleRestart = () => {
+    setCurrentIndex(0);
+    setShowNext(false);
+    setCorrectCount(0);
+    setIncorrectCount(0);
+    setCount(0);
+    setDataForReview([]);
+    setRemainingQuestions([]);
+    setLoading(true);
+    setError(null);
+    setCurrentQuestion(undefined);
+    loadQuestions(); // Reload questions
+  }
 
   return (
     <div className={styles.page}>
       <main className={styles.main}>
         {count <= 9 ? (
           <>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                width: "500px",
-              }}
-            >
+            <div className={styles.questionContainer}>
+              {                loading && <p>Loading questions...</p>}
+              {error && <p>{error}</p>}
+              {currentQuestion && (
               <Question
                 key={currentQuestion.question}
                 question={currentQuestion.question}
                 answers={currentQuestion.answers}
                 correctAnswer={currentQuestion.correctAnswer}
                 onAnswered={handleAnswered}
-              />
+              />)}
               {showNext && (
                 <div
                   style={{
@@ -95,10 +175,10 @@ export default function ControlQuestion() {
                   }}
                 >
                   <button className={styles.nextButton} onClick={handleNext}>
-                    Next
+                    Næste
                   </button>
-
-                  <div
+                  {currentQuestion && (
+                  <div 
                     style={{
                       backgroundColor: "#cef5ff",
                       borderRadius: "10px",
@@ -111,22 +191,20 @@ export default function ControlQuestion() {
                       justifyContent: "center",
                       textAlign: "center",
                       opacity: currentQuestion.info ? 1 : 0, // Fade in/out
-                      transition: "opacity 0.3s ease", // Smooth transition for appearance
+                      transition: "opacity 0.5s ease", // Smooth transition for appearance
                     }}
                   >
-                    <p
+                    <p className="infoText"
                       style={{
                         visibility: currentQuestion.info ? "visible" : "hidden", // Make text visible or hidden
-                        minHeight: "2em", // Ensure some minimum space
-                        textAlign: "center",
-                        maxWidth: "400px",
-                        margin: 0, // Remove any extra margin
+                        
                       }}
                     >
                       {currentQuestion.info || "‎"}{" "}
                       {/* Fallback for empty info */}
                     </p>
                   </div>
+                  )}
                 </div>
               )}
             </div>
@@ -155,7 +233,7 @@ export default function ControlQuestion() {
               {dataForReview.map((item, index) => (
                 <li key={index} style={{ margin: "8px 0" }}>
                   {item.answered !== item.correct && (
-                    <div>
+                    <div style={{scale: "0.9"}}>
                        <span style={{ color: "red" }}>
                         (Dit svar var forkert)
                         <br />
@@ -168,6 +246,7 @@ export default function ControlQuestion() {
                 </li>
               ))}
             </ul>
+            <button className={styles.nextButton} onClick={()=>{handleRestart()}}>Prøv igen</button>
           </div>
         )}
       </main>
