@@ -149,9 +149,9 @@ export default function ControlQuestion() {
   }
 
   return (
-    <div className={styles.page}>
+    <div >
       <main className={styles.main}>
-        {count <= 9 ? (
+        {count <= 2 ? (
           <>
             <div className={styles.questionContainer}>
               {                loading && <p>Loading questions...</p>}
@@ -164,7 +164,7 @@ export default function ControlQuestion() {
                 correctAnswer={currentQuestion.correctAnswer}
                 onAnswered={handleAnswered}
               />)}
-              {showNext && (
+              
                 <div
                   style={{
                     display: "flex",
@@ -174,51 +174,15 @@ export default function ControlQuestion() {
                     gap: "0.5rem",
                   }}
                 >
-                  <button className={styles.nextButton} onClick={handleNext}>
+                  <button className={styles.nextButton} onClick={handleNext} disabled={!showNext}>
                     Næste
                   </button>
-                  {currentQuestion && (
-                  <div 
-                    style={{
-                      backgroundColor: "#cef5ff",
-                      borderRadius: "10px",
-                      padding: "8px",
-                      width: "200px",
-                      marginTop: "20px",
-                      minHeight: "40px", // reserve vertical space
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      textAlign: "center",
-                      opacity: currentQuestion.info ? 1 : 0, // Fade in/out
-                      transition: "opacity 0.5s ease", // Smooth transition for appearance
-                    }}
-                  >
-                    <p className="infoText"
-                      style={{
-                        visibility: currentQuestion.info ? "visible" : "hidden", // Make text visible or hidden
-                        
-                      }}
-                    >
-                      {currentQuestion.info || "‎"}{" "}
-                      {/* Fallback for empty info */}
-                    </p>
-                  </div>
-                  )}
+                  
                 </div>
-              )}
             </div>
           </>
         ) : (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              textAlign: "center",
-              padding: "20px",
-            }}
-          >
+          <div className={styles.resultContainer}>
             <h2>Quiz completed! 🎉</h2>
             <p style={{ margin: "8px" }}>
               You answered {correctCount} out of {count} questions correctly.

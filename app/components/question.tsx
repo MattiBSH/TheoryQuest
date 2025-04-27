@@ -28,7 +28,7 @@ export default function Question({
 
   return (
     //Box shadow four corners
-    <div className={styles.questionBox} style={{boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)"}}>
+    <div className={styles.questionBox}>
       <h2 className={styles.questionText}>{question}</h2>
       <ul className={styles.answerList}>
         {answers.map((answer, index) => {

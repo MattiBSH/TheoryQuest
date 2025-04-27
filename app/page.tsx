@@ -9,14 +9,11 @@ export default function Home() {
  
   return (
     <div className={styles.centerBox}>
-      <div className={styles.header}>
-      <h1 className={styles.title}>Kontrol spørgsmål</h1></div>
+      <h1 className={styles.title}>Kontrol spørgsmål</h1>
         {controlGame ? <ControlQuestion /> :
-        <div className="centerBox">
           <button className={styles.startButton} onClick={()=>setControlGame(true)}>
           Start prøven
           </button>          
-          </div>
         }
     </div>
   );
