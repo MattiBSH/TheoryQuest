@@ -17,6 +17,7 @@
   .answerList {
     list-style: none;
     padding: 0;
+    color: black;
   }
   
   .answer {

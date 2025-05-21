@@ -48,8 +48,7 @@ export default function Question({
             <li
               key={index}
               onClick={() => handleClick(answer)}
-              className={className}
-            >
+              className={className}>
               {answer}
             </li>
           );
