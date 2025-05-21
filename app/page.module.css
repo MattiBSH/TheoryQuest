@@ -17,8 +17,6 @@
   margin-right: 10%;
 }
 
-
-
 .header {
   color: #000;
   text-align: center;
@@ -30,6 +28,8 @@
   font-weight: 400;
   line-height: normal;
   letter-spacing: -1.28px;
+  z-index: 2;
+
 }
 
 .questionContainer{
@@ -37,7 +37,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+  z-index: 2;
+
 }
 
 .resultContainer {
@@ -52,6 +53,9 @@
   background-color: #e2e2e2d9;
   z-index: 2;
   border-radius: 4%;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
 }
 
 .centerBox {
@@ -63,6 +67,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 1;
+}
+
+.centerBox::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.14));
+  z-index: 1;
 }
 
 .infoText {
@@ -85,6 +98,7 @@
   font-family: Inter;
   font-style: normal;
   border-radius: 20px;
+  z-index: 2;
 }
 
 .nextButton {
@@ -97,7 +111,8 @@
   cursor: pointer;
   z-index: 2;
   border-radius: 20px;
-
+  font-weight: 600;
+  font-family: sans-serif;
 }
 .nextButton:hover {
   background: #1a2128;
@@ -129,15 +144,15 @@
 
 .title {
   color: #1f1f1f;
-text-align: center;
--webkit-text-stroke-width: 0.8px;
--webkit-text-stroke-color: #FFF;
-font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-font-size: 123px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-letter-spacing: -1.28px;
+  text-align: center;
+  -webkit-text-stroke-width: 0.8px;
+  -webkit-text-stroke-color: #FFF;
+  font-family: serif;
+  font-size: 123px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: -1.28px;
 }
 .subtitle {
   font-size: 20px;
@@ -158,7 +173,6 @@ letter-spacing: -1.28px;
     --gray-rgb: 255, 255, 255;
     --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
     --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
     --button-primary-hover: #ccc;
     --button-secondary-hover: #878787;
   }
@@ -183,13 +197,8 @@ letter-spacing: -1.28px;
 
   .centerBox {
     width: 100%;
-    aspect-ratio: 1080/2420;
+    aspect-ratio: 3/5;
     background: url("/car_road.jpg") center center / cover no-repeat;
-    position: relative; /* no absolute unless you really need it */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #1f1f1f;
   }
+
 }
