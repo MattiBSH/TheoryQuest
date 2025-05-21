@@ -6,7 +6,6 @@
   --gray-rgb: 0, 0, 0;
   --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
   --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
 
@@ -18,37 +17,19 @@
   margin-right: 10%;
 }
 
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
 
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #878787;
-  }
-}
-
-@media screen and (max-width: 1200px) {
-
-  .questionContainer{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-}
 
 .header {
   color: #000;
-text-align: center;
--webkit-text-stroke-width: 2px;
--webkit-text-stroke-color: #FFF;
-font-family: Jaro;
-font-size: x-large;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-letter-spacing: -1.28px;
+  text-align: center;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #FFF;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: x-large;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -1.28px;
 }
 
 .questionContainer{
@@ -92,29 +73,31 @@ letter-spacing: -1.28px;
 
 .startButton {
   border-radius: 8px;
-border: 1px solid rgba(255, 255, 255, 0.50);
-background: #000;
-
-/* Button Shadow */
-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
-padding: 20px;
-justify-content: flex-end;
-align-items: center;
-color: #FFF;
-margin-top: 20px;
-font-size: 40px;
-font-family: Inter;
-font-style: normal;
+  border: 1px solid rgba(255, 255, 255, 0.50);
+  background: #000;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  justify-content: flex-end;
+  align-items: center;
+  color: #FFF;
+  margin-top: 20px;
+  font-size: 22px;
+  font-family: Inter;
+  font-style: normal;
+  border-radius: 20px;
 }
 
 .nextButton {
   background: #000000;
   color: white;
-  padding: 10px 20px;
+  font-size: 14px;
+  padding: 20px 30px;
   border-radius: 5px;
   border: none;
   cursor: pointer;
   z-index: 2;
+  border-radius: 20px;
+
 }
 .nextButton:hover {
   background: #1a2128;
@@ -123,80 +106,6 @@ font-style: normal;
   display: flex;
   flex-direction: column;
   text-align: center;
-}
-
-.main ol {
-  font-family: var(--font-geist-mono);
-  padding-left: 0;
-  margin: 0;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -0.01em;
-  list-style-position: inside;
-}
-
-.main li:not(:last-of-type) {
-  margin-bottom: 8px;
-}
-
-.main code {
-  font-family: inherit;
-  background: var(--gray-alpha-100);
-  padding: 2px 4px;
-  border-radius: 4px;
-  font-weight: 600;
-}
-
-.ctas {
-  display: flex;
-  gap: 16px;
-}
-
-.ctas a {
-  appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 20px;
-  border: none;
-  border: 1px solid transparent;
-  transition:
-  background 0.2s,
-  color 0.2s,
-  border-color 0.2s;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 500;
-}
-
-a.primary {
-  background: var(--foreground);
-  color: var(--background);
-  gap: 8px;
-}
-
-a.secondary {
-  border-color: var(--gray-alpha-200);
-  min-width: 158px;
-}
-
-.footer {
-  grid-row-start: 3;
-  display: flex;
-  gap: 24px;
-}
-
-.footer a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.footer img {
-  flex-shrink: 0;
 }
 
 /* Enable hover only on non-touch devices */
@@ -221,9 +130,9 @@ a.secondary {
 .title {
   color: #000;
 text-align: center;
--webkit-text-stroke-width: 2px;
+-webkit-text-stroke-width: 0.8px;
 -webkit-text-stroke-color: #FFF;
-font-family: Jaro;
+font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 font-size: 123px;
 font-style: normal;
 font-weight: 400;
@@ -241,5 +150,43 @@ letter-spacing: -1.28px;
 @media (prefers-color-scheme: dark) {
   .logo {
     filter: invert();
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .page {
+    --gray-rgb: 255, 255, 255;
+    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
+    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
+
+    --button-primary-hover: #ccc;
+    --button-secondary-hover: #878787;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+
+  .questionContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    margin-top: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .title {
+    font-size: 80px;
+  }
+
+  .centerBox {
+    width: 100%;
+    aspect-ratio: 1080/2420;
+    background: url("/car_road.jpg") center center / cover no-repeat;
+    position: relative; /* no absolute unless you really need it */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }
