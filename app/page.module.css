@@ -197,7 +197,7 @@
 
   .centerBox {
     width: 100%;
-    aspect-ratio: 3/5;
+    aspect-ratio: 4/7;
     background: url("/car_road.jpg") center center / cover no-repeat;
   }
 
