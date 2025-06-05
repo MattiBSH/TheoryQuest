@@ -11,7 +11,7 @@ export default function Home() {
     <div className={styles.centerBox}>
       <h1 className={styles.title}>Kontrol spørgsmål</h1>
         {controlGame ? <ControlQuestion /> :
-          <button className={styles.startButton} onClick={()=>setControlGame(true)}>
+          <button className={styles.button} onClick={()=>setControlGame(true)}>
           Start prøven
           </button>          
         }

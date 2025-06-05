@@ -59,7 +59,7 @@ export default function ControlQuestion() {
   }, []);
   
   function loadQuestions() {
-    fetch('/api/convert')
+    fetch('/api/questions')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -174,7 +174,7 @@ export default function ControlQuestion() {
                     gap: "0.5rem",
                   }}
                 >
-                  <button className={styles.nextButton} onClick={handleNext} disabled={!showNext}>
+                  <button className={styles.button} onClick={handleNext} disabled={!showNext}>
                     Næste
                   </button>
                   
@@ -210,7 +210,7 @@ export default function ControlQuestion() {
                 </li>
               ))}
             </ul>
-            <button className={styles.nextButton} onClick={()=>{handleRestart()}}>Prøv igen</button>
+            <button className={styles.button} onClick={()=>{handleRestart()}}>Prøv igen</button>
           </div>
         )}
       </main>
