@@ -4,9 +4,9 @@ import {
   Chart as ChartJS,
   ArcElement,
   Tooltip,
-  Legend
+  Legend, 
 } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import { Pie, } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -15,7 +15,7 @@ type PieChartProps = {
   incorrect: number;
 };
 
-export default function PieChart({ correct, incorrect }: PieChartProps) {
+export default function PieChartCustom({ correct, incorrect }: PieChartProps) {
   const data = {
     labels: ['Correct', 'Incorrect'],
     
@@ -31,8 +31,6 @@ export default function PieChart({ correct, incorrect }: PieChartProps) {
   };
 
   return (
-    <div className="w-80 h-80">
       <Pie data={data} />
-    </div>
   );
 }

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import styles from "../page.module.css";
 import {QuestionType} from "../types/questionType";
-import PieChart from "../PieChart";
+import PieChartCustom from "../PieChart";
 import Question from "./question";
-
+import { PieChart, ListMinus } from 'lucide-react';
 
 export default function ControlQuestion() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showNext, setShowNext] = useState(false);
+  const [mode, setMode] = useState(true);
   const [correctCount, setCorrectCount] = useState(0);
   const [incorrectCount, setIncorrectCount] = useState(0);
   const [count, setCount] = useState(0);
@@ -183,34 +184,42 @@ export default function ControlQuestion() {
           </>
         ) : (
           <div className={styles.resultContainer}>
-            <h2>Quiz completed! 🎉</h2>
-            <p style={{ margin: "8px" }}>
+            {!mode ? (
+            <PieChart size={20}  onClick={mode=>{mode?setMode(true):setMode(false)}}/>
+          ) : (
+            <ListMinus size={20}  onClick={mode=>{mode?setMode(false):setMode(true)}}/>
+          )}
+            {mode ? (
+            <div style={{ width: '80%'}}>
+              <h2>Quiz completed! 🎉</h2>
+            <p>
               You answered {correctCount} out of {count} questions correctly.
             </p>
-
-            <div style={{ width: "200px", marginBottom: "20px" }}>
-              <PieChart correct={correctCount} incorrect={incorrectCount} />
-            </div>
+              <PieChartCustom correct={correctCount} incorrect={incorrectCount} />
+            </div>):(
+            <div>
             {dataForReview.some((item) => item.answered !== item.correct) && (
-            <h3 >Questions for Review</h3>)}
-            <ul style={{ listStyleType: "none", padding: 0 }}>
+            <h2 >Questions for Review</h2>)}
+            <ul style={{ listStyleType: "none", padding: 0, margin: 0, maxHeight: "350px", overflowY: "auto" }}>
               {dataForReview.map((item, index) => (
-                <li key={index} style={{ margin: "8px 0" }}>
+                <li key={index} >
                   {item.answered !== item.correct && (
-                    <div style={{scale: "0.9"}}>
-                       <span style={{ color: "red" }}>
+                    <div style={{scale: "0.9", padding: "10px", marginBottom: "10px", borderRadius: "24px", border: "1px solid rgba(0, 0, 0, 0.32)",backgroundColor: "#e2e2e271"}}>
+
+                      <p style={{ color: "red" }}>
                         (Dit svar var forkert)
-                        <br />
-                      </span>
-                      <strong>Spørgsmål:</strong> {item.question} <br />
-                      <strong>Dit svar: </strong> {item.answered} <br />
-                      <strong>Det rigtige svar: </strong> {item.correct}
+                      </p>
+                      <p><strong>Spørgsmål:</strong></p> {item.question} <br />
+                      <p><strong>Dit svar: </strong></p> {item.answered} <br />
+                      <p><strong>Det rigtige svar: </strong></p> {item.correct}
                     </div>
                   )}
                 </li>
               ))}
             </ul>
+             
             <button className={styles.button} onClick={()=>{handleRestart()}}>Prøv igen</button>
+          </div>)}
           </div>
         )}
       </main>
