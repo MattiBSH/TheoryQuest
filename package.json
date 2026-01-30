@@ -11,7 +11,7 @@
   "dependencies": {
     "lucide-react": "^0.513.0",
     "mongodb": "^6.16.0",
-    "next": "15.3.0",
+    "next": "15.3.8",
     "react": "^18.3.1",
     "react-chartjs-2": "^4.0.0",
     "react-dom": "^18.3.1",
